@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trattoria – Authentic Italian Cuisine | Nairobi CBD</title>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">  <!-- GSAP -->  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>  <!-- Three.js -->  <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0d0d0d;
+      color: #f8f4e3;
+      overflow-x: hidden;
+    }
+
+    header {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 4rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      max-width: 480px;
+      line-height: 1.6;
+      opacity: 0.85;
+    }
+
+    .cta {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.9rem 1.6rem;
+      border-radius: 40px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn.primary {
+      background: #c49a6c;
+      color: #0d0d0d;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: #f8f4e3;
+      border: 1px solid #c49a6c;
+    }
+
+    #three-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    section {
+      padding: 6rem 4rem;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .menu-item {
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+    }
+
+    .menu-item h3 {
+      margin-bottom: 0.5rem;
+      font-family: 'Playfair Display', serif;
+    }
+
+    footer {
+      padding: 3rem;
+      text-align: center;
+      opacity: 0.6;
+    }
+  </style></head>
+<body><header>
+  <div class="hero-text">
+    <h1>Trattoria</h1>
+    <p>Authentic Italian cuisine in the heart of Nairobi CBD. Handmade pasta, rich flavors, and warm hospitality.</p>
+    <div class="cta">
+      <button class="btn primary" onclick="window.location.href='tel:0799739679'">Call Now</button>
+      <button class="btn secondary" onclick="window.location.href='https://wa.me/254799739679'">WhatsApp</button>
+    </div>
+  </div>
+  <div id="three-container"></div>
+</header><section id="menu">
+  <h2>Our Signature Pasta</h2>
+  <div class="menu-grid">
+    <div class="menu-item"><h3>Spaghetti Carbonara</h3><p>Classic Roman style with creamy sauce and pancetta.</p></div>
+    <div class="menu-item"><h3>Fettuccine Alfredo</h3><p>Rich parmesan cream with handmade fettuccine.</p></div>
+    <div class="menu-item"><h3>Penne Arrabbiata</h3><p>Bold tomato sauce with chili heat.</p></div>
+  </div>
+</section><section id="reserve">
+  <h2>Reserve a Table</h2>
+  <p>Book your table instantly via WhatsApp. No apps. No waiting.</p>  <form id="reservationForm" style="margin-top:2rem; max-width:420px;">
+    <input type="text" id="name" placeholder="Your Name" required style="width:100%; padding:0.8rem; margin-bottom:1rem; border-radius:8px; border:none;" />
+    <input type="date" id="date" required style="width:100%; padding:0.8rem; margin-bottom:1rem; border-radius:8px; border:none;" />
+    <input type="time" id="time" required style="width:100%; padding:0.8rem; margin-bottom:1rem; border-radius:8px; border:none;" />
+    <input type="number" id="people" placeholder="Number of Guests" required style="width:100%; padding:0.8rem; margin-bottom:1.5rem; border-radius:8px; border:none;" />
+    <button type="submit" class="btn primary">Reserve via WhatsApp</button>
+  </form>
+</section><section>
+  <h2>Location & Hours</h2>
+  <p>20th Century Plaza, Kaunda Street, Nairobi CBD<br>Open daily until 12:00 AM</p>
+  <iframe
+    src="https://www.google.com/maps?q=20th+Century+Plaza+Kaunda+Street+Nairobi&output=embed"
+    width="100%" height="300" style="border:0; margin-top:2rem;"></iframe>
+</section><footer>
+  © Trattoria Nairobi · Italian Dining
+</footer><script>
+  // GSAP animations
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.from('.hero-text', { opacity: 0, y: 60, duration: 1.2 });
+  gsap.from('.menu-item', {
+    scrollTrigger: { trigger: '#menu' },
+    opacity: 0,
+    y: 40,
+    stagger: 0.2
+  });
+
+  // THREE.JS – Procedural Pasta Sculpture
+  const container = document.getElementById('three-container');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera.position.z = 6;
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  container.appendChild(renderer.domElement);
+
+  const light = new THREE.DirectionalLight(0xffffff, 1);
+  light.position.set(5, 5, 5);
+  scene.add(light);
+  scene.add(new THREE.AmbientLight(0xffe0b2, 0.6));
+
+  const pastaMaterial = new THREE.MeshStandardMaterial({
+    color: 0xf5d7a1,
+    roughness: 0.45,
+    metalness: 0.05
+  });
+
+  const pastaGroup = new THREE.Group();
+
+  for (let i = 0; i < 14; i++) {
+    const geometry = new THREE.TorusKnotGeometry(0.6, 0.12, 120, 16, 2, 3);
+    const mesh = new THREE.Mesh(geometry, pastaMaterial);
+    mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+    mesh.position.y = i * 0.12 - 0.8;
+    pastaGroup.add(mesh);
+  }
+
+  scene.add(pastaGroup);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    pastaGroup.rotation.y += 0.002;
+    pastaGroup.rotation.x += 0.001;
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+  // Reservation form -> WhatsApp redirect
+  const form = document.getElementById('reservationForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const people = document.getElementById('people').value;
+
+      const message = `Hello Trattoria,%0A%0AI would like to reserve a table.%0A%0AName: ${name}%0ADate: ${date}%0ATime: ${time}%0AGuests: ${people}`;
+      window.open(`https://wa.me/254799739679?text=${message}`, '_blank');
+    });
+  }
+</script></body>
+</html>
